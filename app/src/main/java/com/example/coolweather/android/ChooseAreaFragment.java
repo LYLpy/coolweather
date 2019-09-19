@@ -125,6 +125,7 @@ public class ChooseAreaFragment extends Fragment {
             queryFromServier(address,"province");
         }
     }
+
     //查询选中省内所有的市，优先从数据库中查询，如果没有查询到再去服务器上查询
     private void queryCities() {
         titleText.setText(selectedProvince.getProvinceName());
@@ -182,7 +183,7 @@ public class ChooseAreaFragment extends Fragment {
                     result = Utility.handleProvinceResponse(responseText);
                 }else  if ("city".equals(type)){
                     result = Utility.handleCityResponse(responseText,selectedProvince.getId());
-                }else if ("count".equals(type)){
+                }else if ("county".equals(type)){
                     result = Utility.handleCountyResponse(responseText,selectedCity.getId());
                 }
                 //线程  重点知识  由于queryProvinces()方法牵扯到UI操作 因此必须要的主线程调用
