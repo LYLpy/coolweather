@@ -1,10 +1,13 @@
 package com.example.coolweather.android.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.coolweather.android.dbname.City;
 import com.example.coolweather.android.dbname.County;
 import com.example.coolweather.android.dbname.Province;
+import com.example.coolweather.android.gson.Weather;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +28,7 @@ public class Utility {
                     province.setProvinceName(provinceObject.getString("name"));
                     province.setProvinceCode(provinceObject.getInt("id"));
                     province.save();
+                    Log.e("___sss",province+"");
                 }
                 return true;
             } catch (JSONException e) {
@@ -48,6 +52,7 @@ public class Utility {
                     city.setCityCode(cityObject.getInt("id"));
                     city.setProvinceId(provinceId);
                     city.save();
+                    Log.e("___handleCityResponse",city+"");
                 }
                 return true;
             } catch (JSONException e) {
@@ -72,6 +77,7 @@ public class Utility {
                     county.setWeatherId(countyObjece.getString("weather_id"));
                     county.setCityId(cityId);
                     county.save();
+                    Log.e("___handleCountyResponse",county+"");
                 }
                 return true;
             } catch (JSONException e) {
@@ -82,5 +88,19 @@ public class Utility {
         return false;
     }
 
+    /*
+    * 将返回的JSON数据解析成Weather类
+    * */
+    public static Weather handleWeatherResponse(String reponse){
+        try {
+            JSONObject jsonObject = new JSONObject(reponse);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            return  new Gson().fromJson(weatherContent,Weather.class);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
