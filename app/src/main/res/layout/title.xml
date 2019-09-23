@@ -4,8 +4,11 @@
     android:layout_height="?attr/actionBarSize">
     <Button
         android:id="@+id/nav_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:text="《--选择"
+        android:textColor="#fff"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:background="@null"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"/>
 
@@ -14,7 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textSize="20sp"/>
+        android:textColor="#fff"
+        android:textSize="22sp"/>
     <TextView
         android:id="@+id/title_update_time"
         android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.coolweather.android.gson.Forecast;
 import com.example.coolweather.android.gson.Weather;
+import com.example.coolweather.android.service.AutoupdateService;
 import com.example.coolweather.android.util.HttpUtil;
 import com.example.coolweather.android.util.Utility;
 
@@ -118,7 +120,6 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
 
@@ -128,7 +129,7 @@ public class WeatherActivity extends AppCompatActivity {
      public void requestWeather(final String weatherId){
         String weatherUrl = "http://guolin.tech/api/weather?cityid="+weatherId+"&key=c3092ed51eb546008aee4272c51b0345";
         Log.e("___weatherId",weatherId) ;
-        loadBingPic();//加载每日一图
+        //loadBingPic();//加载每日一图
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
              @Override
              public void onResponse(Call call, Response response) throws IOException {
@@ -200,6 +201,9 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+
+        Intent intent = new Intent(this, AutoupdateService.class);
+        startService(intent);
     }
 
 
