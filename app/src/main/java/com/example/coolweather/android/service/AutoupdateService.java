@@ -9,9 +9,7 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
-import com.example.coolweather.android.WeatherActivity;
 import com.example.coolweather.android.gson.Weather;
 import com.example.coolweather.android.util.HttpUtil;
 import com.example.coolweather.android.util.Utility;
@@ -41,15 +39,17 @@ public class AutoupdateService extends Service {
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,triggerAtTime,pi);
         return super.onStartCommand(intent, flags, startId);
     }
-
+    /*
+    *  更新天气信息
+    * */
     private  void updateWeather(){
         SharedPreferences perf = PreferenceManager.getDefaultSharedPreferences(this);
         final String weatherString = perf.getString("weather",null);
         if (weatherString != null){
             //有缓存时直接解析天气数据
-            Weather weather = Utility.handleWeatherResponse(weatherString);
-            String weatherUrl = "http://guolin.tech/api/weather?cityid="+"&key=c3092ed51eb546008aee4272c51b0345";
-            HttpUtil.sendOkHttpRequest(weatherString, new Callback() {
+            Weather weatherId = Utility.handleWeatherResponse(weatherString);
+            String weatherUrl = "http://guolin.tech/api/weather?cityid="+weatherId+"&key=c3092ed51eb546008aee4272c51b0345";
+            HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     e.printStackTrace();
