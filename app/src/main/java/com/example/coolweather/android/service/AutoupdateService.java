@@ -50,6 +50,7 @@ public class AutoupdateService extends Service {
             Weather weatherId = Utility.handleWeatherResponse(weatherString);
             String weatherUrl = "http://guolin.tech/api/weather?cityid="+weatherId+"&key=c3092ed51eb546008aee4272c51b0345";
             HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
+
                 @Override
                 public void onFailure(Call call, IOException e) {
                     e.printStackTrace();
